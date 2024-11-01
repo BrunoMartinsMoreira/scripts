@@ -11,8 +11,9 @@
  *
  * @example
  * // Exemplo: Similaridade entre "hello" e "hella" com substringLength 3
- * const similarity = getStringSimilarity("hello", "hella", 3);
+ * const similarity = getSimilaryBetweenTwoStrings("hello", "hella", 3);
  * console.log(similarity); // Saída: aproximadamente 0.67
+ *
  *
  * // Explicação detalhada do cálculo de similaridade:
  *
