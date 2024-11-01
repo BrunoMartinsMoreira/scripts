@@ -10,27 +10,51 @@
  * @returns A similaridade entre as duas strings, variando de 0 a 1.
  *
  * @example
- * // Exemplo 1: Similaridade entre "casa" e "casaco" com substringLength 3
- * const similarity = getSimilaryBetweenTwoStrings("casa", "casaco", 3);
- * console.log(similarity); // Saída: aproximadamente 0.6667
+ * // Exemplo: Similaridade entre "hello" e "hella" com substringLength 3
+ * const similarity = getStringSimilarity("hello", "hella", 3);
+ * console.log(similarity); // Saída: aproximadamente 0.67
  *
  * // Explicação detalhada do cálculo de similaridade:
  * //
- * // 1. Encontramos as substrings de comprimento 3 em cada string.
- * //    - `"casa"` gera as substrings: `"cas"`, `"asa"`.
- * //    - `"casaco"` gera as substrings: `"cas"`, `"asa"`, `"sac"`, `"aco"`.
+ * // A fórmula utilizada é: similarity = (match * 2) / (firstString.length + secondString.length - (substringLength - 1) * 2)
  * //
- * // 2. Contamos as correspondências (match) entre as substrings:
- * //    - As substrings que correspondem entre `"casa"` e `"casaco"` são `"cas"` e `"asa"`.
- * //    - Então, `match = 2`.
+ * // Onde cada parte representa:
  * //
- * // 3. Calculamos o comprimento ajustado das duas strings para evitar sobreposição:
- * //    - Comprimento de `"casa"` = 4.
- * //    - Comprimento de `"casaco"` = 6.
- * //    - Comprimento ajustado = 4 + 6 - 2 * (3 - 1) = 6.
+ * // 1. match * 2:
+ * //    - match representa o número de substrings em comum encontradas
+ * //    - Multiplicamos por 2 porque cada substring em comum representa uma correspondência em ambas as strings
  * //
- * // 4. Aplicamos a fórmula da similaridade:
- * //    - Similaridade = (2 * match) / comprimento ajustado = (2 * 2) / 6 ≈ 0.6667.
+ * // 2. firstString.length + secondString.length:
+ * //    - Soma o comprimento total das duas strings
+ * //    - Representa o número máximo teórico de substrings possíveis
+ * //
+ * // 3. (substringLength - 1) * 2:
+ * //    - Ajuste necessário pois o número de substrings possíveis é menor que o comprimento da string
+ * //    - Por exemplo, se substringLength = 3 e temos "hello" (length = 5):
+ * //      - As substrings possíveis são: "hel", "ell", "llo" (3 substrings)
+ * //      - O número de substrings é sempre (length - (substringLength - 1))
+ * //    - Multiplicamos por 2 pois estamos ajustando para ambas as strings
+ * //
+ * // Para o exemplo "hello" e "hella":
+ * // - Substrings de "hello": ["hel", "ell", "llo"]
+ * // - Substrings de "hella": ["hel", "ell", "lla"]
+ * // - Matches = 2 ("hel" e "ell")
+ * //
+ * // Cálculo:
+ * // match = 2
+ * // firstString.length = 5
+ * // secondString.length = 5
+ * // substringLength = 3
+ * //
+ * // similarity = (2 * 2) / (5 + 5 - (3-1) * 2)
+ * //           = 4 / (10 - 4)
+ * //           = 4 / 6
+ * //           ≈ 0.67
+ * //
+ * // Interpretação do resultado:
+ * // - Se as strings forem idênticas, o resultado será 1 (similaridade máxima)
+ * // - Se não houver substrings em comum, o resultado será 0 (similaridade mínima)
+ * // - Qualquer outro caso resultará em um valor entre 0 e 1, indicando o grau de similaridade
  */
 export const getSimilaryBetweenTwoStrings = (
   firstString: string,
